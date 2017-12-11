@@ -69,11 +69,24 @@ class App extends Component {
     }
   }
 
-
-
+  
+  
+  
   render() {
+    const { products, categories, signedIn } = this.state
+    const categoryList = categories.map((category) => {
+          return <p>{category}</p>
+        })
+    
     return (
       <div className="App">
+      <h1>Plants 'R' Us</h1>
+      <div>
+        </div>
+      
+        <ul>{categoryList}</ul>
+      
+
 
       </div>
     );
