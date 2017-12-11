@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText, CardSubTitle } from './components/Card'
+import NavElement from './components/NavElement'
 import './App.css';
 
 class App extends Component {
@@ -64,29 +65,60 @@ class App extends Component {
       }
       ]
     },
-    search: {
-      searchQuery: null,
-      searchResult: []
-    }
+    searchQuery: null,
+    searchResults: []
+
   }
+
+  // matchesCategory(product, searchQuery) {
+  //   product.categories.forEach((category) => {
+  //     return category === searchQuery
+  //   })
+  // }
+
+  onCategorySelect = ({ searchQuery }) => {
+    // console.log('first', searchQuery)
+    this.setState({ searchResults: this.state.products.filter(product => product.categories.some((category) => { 
+      return category === searchQuery
+    })
+      
+      // console.log(product)
+      // product.categories.map((category) => {
+        // console.log('second', searchQuery)
+        // if (category === searchQuery) {
+          //   return true
+          // } else {
+            //   console.log('category', category, 'searchQuery ', searchQuery, 'product ', product)
+            //   return false
+            
+            // }
+          )
+          // console.log(this.state.searchResults)
+        }) 
+        console.log('searchResults ', this.state.searchResults)
+  // })
+  // return searchResults
+  } 
+
 
   
   render() {
     const { products, categories, signedIn } = this.state
-    const categoryList = categories.map((category, index) => {
-          return <p key={ 'category' + index }>{category}</p>
-        })
-    // const productList = products.map((product, index) => {
-    //       return <p key={ 'product' + index }>{product}</p>
+    // const categoryList = categories.map((category, index) => {
+    //       return <p key={ 'category' + index }>{category}</p>
     //     })
     
     return (
       <div className="App">
       <h1>Plants 'R' Us</h1>
       <div>
+        {categories.map(category => (
+          <NavElement onCategorySelect={ this.onCategorySelect} category={category}>{category}</NavElement>
+        )
+      )
+      }
         </div>
-      
-        <nav>{categoryList}</nav>
+
         <div className='myCards'>
         { products.map((p) => 
           // <Card {...p} />
@@ -97,7 +129,7 @@ class App extends Component {
              { p.name } 
               </CardTitle>
               <CardSubTitle>
-             {p.scientificName}
+             { p.scientificName }
                 </CardSubTitle>
             <CardText>{ p.description }</CardText>
             </CardBody>
