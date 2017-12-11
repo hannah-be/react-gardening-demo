@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Card, CardImg, CardBody, CardTitle, CardText, CardSubTitle } from './components/Card'
 import './App.css';
 
 class App extends Component {
@@ -41,7 +42,7 @@ class App extends Component {
         productImageUrl: "https://www.diggers.com.au/media/products/142714/m.jpg",
       },
       {
-        name: "BLACK BIRD NETTING 10.00 X 10.00",
+        name: "Black Bird Netting 10.00 X 10.00",
         scientificName: null,
         description: "Stop birds and possums from eating your precious fruit by covering them with this high quality netting.",
         nonMemberPrice: 89.00,
@@ -70,13 +71,14 @@ class App extends Component {
   }
 
   
-  
-  
   render() {
     const { products, categories, signedIn } = this.state
-    const categoryList = categories.map((category) => {
-          return <p>{category}</p>
+    const categoryList = categories.map((category, index) => {
+          return <p key={ 'category' + index }>{category}</p>
         })
+    // const productList = products.map((product, index) => {
+    //       return <p key={ 'product' + index }>{product}</p>
+    //     })
     
     return (
       <div className="App">
@@ -84,7 +86,24 @@ class App extends Component {
       <div>
         </div>
       
-        <ul>{categoryList}</ul>
+        <nav>{categoryList}</nav>
+        <div className='myCards'>
+        { products.map((p) => 
+          // <Card {...p} />
+          <Card {...p}>
+            <CardImg src={p.productImageUrl}/>
+            <CardBody>
+            <CardTitle>
+             { p.name } 
+              </CardTitle>
+              <CardSubTitle>
+             {p.scientificName}
+                </CardSubTitle>
+            <CardText>{ p.description }</CardText>
+            </CardBody>
+            </Card>
+          )}
+        </div>
       
 
 
