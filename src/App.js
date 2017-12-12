@@ -1,7 +1,14 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText, CardSubTitle } from './components/Card'
-import NavElement from './components/NavElement'
-import './App.css';
+import React, { Component } from "react"
+import {
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  CardText,
+  CardSubTitle
+} from "./components/Card"
+import NavElement from "./components/NavElement"
+import "./App.css"
 
 class App extends Component {
   state = {
@@ -9,50 +16,50 @@ class App extends Component {
       {
         name: "Black Russian Tomato",
         scientificName: "Solanum lycopersicum L.",
-        description: "This variety makes the most of the short seasons with heat absorbing black skin. We procured seeds of the charcoal-fleshed fruit and passed it through Seed Savers and then on to the rest of the world. Fruits in 11 weeks from transplant and yields 7kg per plant.",
+        description:
+          "This variety makes the most of the short seasons with heat absorbing black skin. We procured seeds of the charcoal-fleshed fruit and passed it through Seed Savers and then on to the rest of the world. Fruits in 11 weeks from transplant and yields 7kg per plant.",
         nonMemberPrice: 3.95,
-        categories: [
-          "vegetable", "edibles"
-        ],
+        categories: ["vegetable", "edibles"],
         inStock: true,
         memberOnly: false,
-        productImageUrl: "https://www.diggers.com.au/media/products/142921/m.jpg",
-    },
+        productImageUrl:
+          "https://www.diggers.com.au/media/products/142921/m.jpg"
+      },
       {
         name: "Russell Lupin",
         scientificName: "Lupinus polyphyllus ‘Russell Lupin Hybrids’",
-        description: "Clumping perennials with dissected fan-like foliage give rise to towers of flower in every pastel shade imaginable. A must for the cottage garden, they combine perfectly with poppies, catmint and roses. They prefer a slightly acid soil, no manures, and good drainage but moist conditions. Protect from snails..",
+        description:
+          "Clumping perennials with dissected fan-like foliage give rise to towers of flower in every pastel shade imaginable. A must for the cottage garden, they combine perfectly with poppies, catmint and roses. They prefer a slightly acid soil, no manures, and good drainage but moist conditions. Protect from snails..",
         nonMemberPrice: 6.95,
-        categories: [
-          "flower"
-        ],
+        categories: ["flower"],
         inStock: true,
         memberOnly: false,
-        productImageUrl: "https://www.diggers.com.au/media/products/142542/m.jpg",
-    },
+        productImageUrl:
+          "https://www.diggers.com.au/media/products/142542/m.jpg"
+      },
       {
         name: "Cucumber Mexican Sour Gherkin",
         scientificName: "Melothria scabra syn. pendula",
-        description: "This heirloom micro-sized climbing cucumber tastes both sweet and sour, just like a gherkin without the work! Prolific fruiting and is a first rate screening plant. May self seed.",
+        description:
+          "This heirloom micro-sized climbing cucumber tastes both sweet and sour, just like a gherkin without the work! Prolific fruiting and is a first rate screening plant. May self seed.",
         nonMemberPrice: 3.95,
-        categories: [
-          "edibles"
-        ],
+        categories: ["edibles"],
         inStock: true,
         memberOnly: false,
-        productImageUrl: "https://www.diggers.com.au/media/products/142714/m.jpg",
+        productImageUrl:
+          "https://www.diggers.com.au/media/products/142714/m.jpg"
       },
       {
         name: "Black Bird Netting 10.00 X 10.00",
         scientificName: null,
-        description: "Stop birds and possums from eating your precious fruit by covering them with this high quality netting.",
-        nonMemberPrice: 89.00,
-        categories: [
-          "garden supplies"
-        ],
+        description:
+          "Stop birds and possums from eating your precious fruit by covering them with this high quality netting.",
+        nonMemberPrice: 89.0,
+        categories: ["garden supplies"],
         inStock: true,
         memberOnly: false,
-        productImageUrl: "https://www.diggers.com.au/media/products/147279/m.jpg",
+        productImageUrl:
+          "https://www.diggers.com.au/media/products/147279/m.jpg"
       }
     ],
     signedIn: false,
@@ -60,88 +67,57 @@ class App extends Component {
     shoppingCart: {
       items: [
         {
-        name: "Russell Lupin",
-        quantity: 2
-      }
+          name: "Russell Lupin",
+          quantity: 2
+        }
       ]
     },
     searchQuery: null,
     searchResults: []
-
   }
 
-  // matchesCategory(product, searchQuery) {
-  //   product.categories.forEach((category) => {
-  //     return category === searchQuery
-  //   })
-  // }
-
   onCategorySelect = ({ searchQuery }) => {
-    // console.log('first', searchQuery)
-    this.setState({ searchResults: this.state.products.filter(product => product.categories.some((category) => { 
-      return category === searchQuery
+    this.setState({
+      searchResults: this.state.products.filter(product =>
+        product.categories.some(category => {
+          return category === searchQuery
+        })
+      )
     })
-      
-      // console.log(product)
-      // product.categories.map((category) => {
-        // console.log('second', searchQuery)
-        // if (category === searchQuery) {
-          //   return true
-          // } else {
-            //   console.log('category', category, 'searchQuery ', searchQuery, 'product ', product)
-            //   return false
-            
-            // }
-          )
-          // console.log(this.state.searchResults)
-        }) 
-        console.log('searchResults ', this.state.searchResults)
-  // })
-  // return searchResults
-  } 
+    console.log("searchResults ", this.state.searchResults)
+  }
 
-
-  
   render() {
     const { products, categories, signedIn } = this.state
-    // const categoryList = categories.map((category, index) => {
-    //       return <p key={ 'category' + index }>{category}</p>
-    //     })
-    
+
     return (
       <div className="App">
-      <h1>Plants 'R' Us</h1>
-      <div>
-        {categories.map(category => (
-          <NavElement onCategorySelect={ this.onCategorySelect} category={category}>{category}</NavElement>
-        )
-      )
-      }
+        <h1>Plants 'R' Us</h1>
+        <div>
+          {categories.map(category => (
+            <NavElement
+              onCategorySelect={this.onCategorySelect}
+              category={category}>
+              {category}
+            </NavElement>
+          ))}
         </div>
 
-        <div className='myCards'>
-        { products.map((p) => 
-          // <Card {...p} />
-          <Card {...p}>
-            <CardImg src={p.productImageUrl}/>
-            <CardBody>
-            <CardTitle>
-             { p.name } 
-              </CardTitle>
-              <CardSubTitle>
-             { p.scientificName }
-                </CardSubTitle>
-            <CardText>{ p.description }</CardText>
-            </CardBody>
+        <div className="myCards">
+          {products.map(p => (
+            <Card {...p}>
+              <CardImg src={p.productImageUrl} />
+              <CardBody>
+                <CardTitle>{p.name}</CardTitle>
+                <CardSubTitle>{p.scientificName}</CardSubTitle>
+                <CardText>{p.description}</CardText>
+              </CardBody>
             </Card>
-          )}
+          ))}
         </div>
-      
-
-
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
