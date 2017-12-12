@@ -5,8 +5,9 @@ function NavElement({ onCategorySelect, category, children }) {
     <button
       className="btn btn-primary"
       onClick={() => {
-        // console.log('button click ', category)
         onCategorySelect({ searchQuery: category })
+        console.log('button click ', category)
+        // console.log({ searchQuery })
       }}>
       {children}
     </button>

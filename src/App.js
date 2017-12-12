@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component, Fragment } from "react"
 import {
   Card,
   CardImg,
@@ -9,6 +9,7 @@ import {
 } from "./components/Card"
 import NavElement from "./components/NavElement"
 import "./App.css"
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 class App extends Component {
   state = {
@@ -76,46 +77,94 @@ class App extends Component {
     searchResults: []
   }
 
+  // componentDidMount() {
+  //   this.load()
+  // }
+
+  // load() {
+  //   listProducts()
+  //     .then(products => {
+  //       this.setState({ products });
+  //     })
+  //     // .catch(saveError);
+  // }
+
   onCategorySelect = ({ searchQuery }) => {
-    this.setState({
-      searchResults: this.state.products.filter(product =>
-        product.categories.some(category => {
-          return category === searchQuery
-        })
-      )
-    })
-    console.log("searchResults ", this.state.searchResults)
+    // const category = this.state.category
+    console.log('first: ', (searchQuery))
+    // console.log(this.setState({ searchQuery: searchQuery }))
+    this.setState({ searchQuery: searchQuery })
   }
-
+  
   render() {
-    const { products, categories, signedIn } = this.state
+    const { products, categories, searchQuery } = this.state
+    
+    const onFilterSelect = ({ searchQuery, products }) => {
+      this.state.products.filter(product => product.categories.some(category => {
+        return category === searchQuery
+      })
+    )}
 
+    console.log(this.state.products)
+    // const filteredProducts = onFilterSelect({searchQuery}, {...products})
+    // console.log(filteredProducts)
+      
     return (
-      <div className="App">
-        <h1>Plants 'R' Us</h1>
-        <div>
-          {categories.map(category => (
-            <NavElement
-              onCategorySelect={this.onCategorySelect}
-              category={category}>
-              {category}
-            </NavElement>
-          ))}
-        </div>
+      <Router>
+        <div className="App">
+          <h1>Plants 'R' Us</h1>
+          <div>
+            {categories.map(category => (
+              <Fragment>
+              <NavElement
+                onCategorySelect={this.onCategorySelect}
+                category={category}>
+                {category}
+                
+              </NavElement>
+              {console.log(searchQuery)}
+              </Fragment>
+            ))}
+          </div>
 
-        <div className="myCards">
-          {products.map(p => (
-            <Card {...p}>
-              <CardImg src={p.productImageUrl} />
-              <CardBody>
-                <CardTitle>{p.name}</CardTitle>
-                <CardSubTitle>{p.scientificName}</CardSubTitle>
-                <CardText>{p.description}</CardText>
-              </CardBody>
-            </Card>
-          ))}
+          <Route path='/products' exact render={() => (
+            searchQuery ? (
+              <Fragment>
+              <div className="myCards">
+                { products &&
+                   this.state.products.map(p => (
+                    <Card {...p}>
+                    <CardImg src={p.productImageUrl} />
+                    <CardBody>
+                    {console.log(this.state.products)}
+                    {console.log(onFilterSelect(this.state.searchQuery, this.state.products))}
+                      <CardTitle>{p.name}</CardTitle>
+                      <CardSubTitle>{p.scientificName}</CardSubTitle>
+                      <CardText>{p.description}</CardText>
+                    </CardBody>
+                  </Card>
+                   ))}
+              </div>
+              </Fragment>
+            ) : (
+              <div className="myCards">
+                { products &&
+                  products.map(p => (
+                    <Card {...p}>
+                    <CardImg src={p.productImageUrl} />
+                    <CardBody>
+                    {/* {console.log(onFilterSelect(this.state.products))} */}
+                      <CardTitle>{p.name}</CardTitle>
+                      <CardSubTitle>{p.scientificName}</CardSubTitle>
+                      <CardText>{p.description}</CardText>
+                    </CardBody>
+                  </Card>
+                ))}
+              </div>
+              ))}
+            />
         </div>
-      </div>
+      </Router>
     )
   }
 }
